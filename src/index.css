@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-porple: #7C5BF3;
+  --color-offPorple: #A790FC;
+  --color-offBlack: #656565;
+  --color-offOffBlack: #D4D7E6;
+  --color-lilac: #99A0C4;
+  --color-stem: #73E077;
+  --color-strawberry: #F34C62;
+  --color-gold: #EFCD5D;
+}
+@font-face {
+  font-family: 'KumbhSans';
+  src: url('/fonts/KumbhSans/KumbhSans-VariableFont_YOPQ,wght.ttf') format('truetype');
+  font-weight: 100 900; /* This allows full variable range */
+  font-display: swap;
+}
+
+:root {
+  font-family: "KumbhSans";
+  font-weight: 500;
+}
