@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Ellipsis, Trash, Pencil, Box } from 'lucide-react'
+import { Ellipsis, Trash, Pencil } from 'lucide-react'
 
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Popper from '@mui/material/Popper';
+import Box from '@mui/material/Box'
 
 import WhiteButtonComponent from './WhiteButtonComponent'
 
@@ -28,12 +29,20 @@ export default function TitleCardComponent({
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const [popperOpen, setPopperOpen] = useState<boolean>(false)
+
+  const handleClickAway = () => {
+    setPopperOpen(false)
+    setAnchorEl(null)
+  }
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
+    setPopperOpen(!popperOpen)
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
+  const id = open ? listId?.toString() : undefined;
 
   async function getGroupAmount(listId: number) {
     const groupResponse = await fetch(`http://localhost:3000/listGroupInstance/all/${listId}`, {
@@ -65,8 +74,15 @@ export default function TitleCardComponent({
         <div className="flex flex-row self-start items-center">
           <WhiteButtonComponent disabled={false} width="w-[124px]">Randomize</WhiteButtonComponent>
           <Ellipsis className="w-[24px] h-[24px] hover:cursor-pointer rotate-90" onClick={handleClick} />
-          <Popper open={open} anchorEl={anchorEl} placement="bottom-start">
-          </Popper>
+          {popperOpen && (  
+          <ClickAwayListener onClickAway={handleClickAway}>
+            <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
+                <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+                  <p>Hello</p>
+                </Box>
+              </Popper>
+            </ClickAwayListener>
+          )}
         </div>
       </div>
     </div>
